@@ -1,0 +1,204 @@
+/* ========== BACKGROUND ========== */
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(125% 125% at 50% 10%, #000000 40%, rgb(21, 0, 78) 100%);
+  z-index: 0;
+  overflow-x: hidden;
+}
+
+/* ========== PARTICLE EFFECT ========== */
+.particle-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
+/* ========== TITLES ========== */
+.title,
+.titletwo {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  background: linear-gradient(180deg, #7b7b7b, #000000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-family: Audiowide;
+  z-index: 1;
+  font-size: 3em;
+  text-align: center;
+  animation: upliftEntrance 1.2s ease-out forwards, floatTitle 4s ease-in-out infinite;
+  font-weight: 900;
+}
+
+.title {
+  top: 20%;
+}
+
+.titletwo {
+  top: 30%;
+}
+
+@keyframes floatTitle {
+  0% {
+    transform: translate(-50%, -60%);
+  }
+  50% {
+    transform: translate(-50%, -65%);
+  }
+  100% {
+    transform: translate(-50%, -60%);
+  }
+}
+
+@keyframes upliftEntrance {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -30%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -60%);
+  }
+}
+
+/* ========== CARD CONTAINER ========== */
+.cards {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+  max-width: 1000px;
+  width: 90%;
+  z-index: 1;
+}
+
+/* ========== CARDS ========== */
+.cards .card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 100px;
+  width: 100%;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.cards .card:hover {
+  transform: scale(1.05);
+}
+
+.cards:hover > .card:not(:hover) {
+  filter: blur(6px);
+  transform: scale(0.95);
+}
+
+/* ========== BUTTONS ========== */
+.cards .card button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #1e1e1e, #000000);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 400;
+  font-style: italic;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  transition: background 0.6s ease, transform 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  animation: float 3s ease-in-out infinite;
+  font-size: 0.9rem;
+  min-width: 100px;
+}
+
+/* Glow effect on hover */
+.cards .card button:hover {
+  background: linear-gradient(225deg, #1e1e1e, #000000);
+  transform: translateY(-2px);
+}
+
+/* Float button effect */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* ========== RESPONSIVENESS ========== */
+@media (max-width: 768px) {
+  .title, .titletwo {
+    font-size: 2.2em;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  .cards .card button {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title, .titletwo {
+    font-size: 1.8em;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+  }
+
+  .cards .card button {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+}
