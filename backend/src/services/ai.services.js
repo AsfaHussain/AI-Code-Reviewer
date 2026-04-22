@@ -220,16 +220,31 @@ Output format:
 `
 };
 
-module.exports = async function reviewAI(code, language) {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
-    systemInstruction: systemInstructions[language] || "Act as a code reviewer"
-  });
+module.exports = async function reviewAI(code, language = "javascript") {
+  try {
+    if (!code) {
+      throw new Error("Code is required");
+    }
 
-  const prompt = `Please review this ${language} code:\n\n${code}`;
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash",
+      systemInstruction:
+        systemInstructions[language?.toLowerCase()] ||
+        "You are a professional code reviewer. Review code with best practices."
+    });
 
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
-  return response.text();
+    const prompt = `Please review this ${language} code:\n\n${code}`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+
+    const text = response.text();
+
+    return text || "No response from AI";
+
+  } catch (error) {
+    console.error("AI SERVICE ERROR:", error);
+
+    return "Error generating AI response";
+  }
 };
-
